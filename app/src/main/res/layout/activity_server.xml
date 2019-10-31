@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".ServerActivity"
+        android:paddingTop="20dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="15dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/main_background">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+        <Button
+                android:id="@+id/buttonLaunchServer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="clickLaunchServer"
+                android:background="@drawable/button_light"
+                android:text="@string/server_start"
+                android:textColor="@color/colorTextDark"/>
+
+    </LinearLayout>
+
+</LinearLayout>

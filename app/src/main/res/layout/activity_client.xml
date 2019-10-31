@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/main_background"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingTop="20dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".ClientActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+        <Button
+                android:id="@+id/refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_dark"
+                android:drawableStart="@drawable/ic_refresh"
+                android:drawableLeft="@drawable/ic_refresh"
+                android:drawablePadding="5dp"
+                android:onClick="clickRefreshDevices"
+                android:paddingStart="15dp"
+                android:paddingLeft="15dp"
+                android:paddingEnd="45dp"
+                android:paddingRight="45dp"
+                android:text="@string/refresh" />
+
+    </LinearLayout>
+
+    <ListView
+            android:id="@+id/listViewDevices"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            >
+
+    </ListView>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+        <Button
+                android:id="@+id/connect"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_light"
+                android:onClick="clickMakeConnection"
+                android:text="@string/client_connect"
+                android:textColor="@color/colorTextDark" />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="end"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+        <Button
+                android:id="@+id/receive_screenshot"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_dark"
+                android:onClick="clickReceiveScreenshot"
+                android:text="@string/receive_screenshot"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp" />
+
+        <Button
+                android:id="@+id/send_file"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_dark"
+                android:onClick="clickSendFile"
+                android:text="@string/send_file"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

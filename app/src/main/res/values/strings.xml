@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">eBluetooth Android Sharing</string>
+    <string name="client_mode">Client mode</string>
+    <string name="server_mode">Server mode</string>
+    <string name="refresh">Refresh devices</string>
+    <string name="server_start">Launch server</string>
+    <string name="client_connect">Connect</string>
+    <string name="receive_screenshot">Get Screenshot</string>
+    <string name="send_file">Send File</string>
+</resources>
