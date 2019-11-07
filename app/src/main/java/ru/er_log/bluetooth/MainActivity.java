@@ -1,7 +1,6 @@
 package ru.er_log.bluetooth;
 
 import android.Manifest;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -15,12 +14,12 @@ import android.widget.Toast;
 
 import java.util.UUID;
 
-import ru.er_log.bluetooth.component.Utils;
+import ru.er_log.bluetooth.util.Util;
 
 public class MainActivity extends AppCompatActivity
 {
     public static final String NAME = "eBluetoothService";
-    public static final String EXTERNAL_DIR_NAME = Utils.getValidFileName(NAME);
+    public static final String EXTERNAL_DIR_NAME = Util.getValidFileName(NAME);
     public static final String TAG = NAME;
     public static final UUID SERVICE_UUID = UUID.fromString("ac780fa2-0a80-43bc-af11-05715d5b5f09");
 

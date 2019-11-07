@@ -1,4 +1,4 @@
-package ru.er_log.bluetooth.component;
+package ru.er_log.bluetooth.util;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -148,22 +148,7 @@ public class FileUtil
         return bytes;
     }
 
-    public static File saveFile(File dir, String fileName, byte[] data)
-    {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        try
-        {
-            byteStream.write(data);
-        } catch (IOException e)
-        {
-            Log.e(TAG, "Error creating ByteArrayOutputStream from array of byte data while saving screenshot", e);
-            return null;
-        }
-
-        return saveFile(dir, fileName, byteStream);
-    }
-
-    public static File saveFile(File dir, String fileName, ByteArrayOutputStream byteStream)
+    public static File saveFile(File dir, String fileName, byte[] bytes)
     {
         File file = new File(dir, fileName);
 
@@ -174,7 +159,7 @@ public class FileUtil
         try
         {
             FileOutputStream fileStream = new FileOutputStream(file);
-            fileStream.write(byteStream.toByteArray());
+            fileStream.write(bytes);
         } catch (IOException e)
         {
             Log.e(TAG, "Error saving file '" + file + "' on disk", e);

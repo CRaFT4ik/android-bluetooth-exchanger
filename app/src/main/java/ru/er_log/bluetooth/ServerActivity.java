@@ -18,9 +18,9 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 
-import ru.er_log.bluetooth.component.FileUtil;
-import ru.er_log.bluetooth.component.ScreenshotUtil;
-import ru.er_log.bluetooth.component.Utils;
+import ru.er_log.bluetooth.util.FileUtil;
+import ru.er_log.bluetooth.util.ScreenshotUtil;
+import ru.er_log.bluetooth.util.Util;
 import ru.er_log.bluetooth.component.eProtocolTypeLayer;
 
 import static ru.er_log.bluetooth.IServerConnectorCallback.CODE_ERROR_LISTEN;
@@ -106,12 +106,12 @@ public class ServerActivity extends AppCompatActivity
 
     private void enableBluetooth(int requestCode)
     {
-        Utils.enableBluetooth(this, bluetoothAdapter, requestCode);
+        Util.enableBluetooth(this, bluetoothAdapter, requestCode);
     }
 
     private void enableDiscoverability(int requestCode)
     {
-        Utils.enableDiscoverability(this, bluetoothAdapter, DISCOVER_DURATION, requestCode);
+        Util.enableDiscoverability(this, bluetoothAdapter, DISCOVER_DURATION, requestCode);
     }
 
     private void launchServer()
@@ -270,7 +270,7 @@ public class ServerActivity extends AppCompatActivity
         {
             if (payload == null) return;
 
-            if (!Utils.isExternalStorageWritable())
+            if (!Util.isExternalStorageWritable())
             {
                 Log.e(TAG, "Type FILE_REQUEST: External storage is not mounted for saving files! Request rejected.");
                 byte[] messageBytes = client.protocolTypeLayer.getTransmitter().form(eProtocolTypeLayer.Types.FILE_RESPONSE, REJECT_WORD.getBytes());
@@ -295,7 +295,7 @@ public class ServerActivity extends AppCompatActivity
         }
         else if (type == eProtocolTypeLayer.Types.FILE_CONTENT)
         {
-            if (!Utils.isExternalStorageWritable())
+            if (!Util.isExternalStorageWritable())
                 Log.e(TAG, "Type FILE_CONTENT: External storage is not mounted for saving files!");
 
             String fileName = client.fileCollector.getName();
@@ -305,7 +305,7 @@ public class ServerActivity extends AppCompatActivity
                 return;
             }
 
-            File documents = Utils.getPrivateDocumentsDir(this);
+            File documents = Util.getPrivateDocumentsDir(this);
             Toast.makeText(ServerActivity.super.getApplicationContext(), "Saving file from the remote device...", Toast.LENGTH_SHORT).show();
             FileUtil.saveFile(documents, fileName, payload);
 

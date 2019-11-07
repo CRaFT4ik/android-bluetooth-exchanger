@@ -2,7 +2,6 @@ package ru.er_log.bluetooth.component;
 
 import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 
 import static ru.er_log.bluetooth.MainActivity.TAG;
@@ -10,7 +9,7 @@ import static ru.er_log.bluetooth.MainActivity.TAG;
 public class eProtocolTypeLayer
 {
     /**
-     * Messages of this type encapsulates into eProtocol and have following format:
+     * Messages of this parsedType encapsulates into eProtocol and have following format:
      *      [32 bits for TYPE][pure data]
      *  <=>
      *      [int][bytes of pure data].
@@ -56,7 +55,7 @@ public class eProtocolTypeLayer
         /* Form message according protocol by adding TYPE ahead. */
         public byte[] form(Types type, byte[] data)
         {
-            if (type == null) throw new NullPointerException("'type' was null");
+            if (type == null) throw new NullPointerException("'parsedType' was null");
 
             int bufLen = (data == null) ? 4 : 4 + data.length;
             ByteBuffer bytes = ByteBuffer.allocate(bufLen);
@@ -76,20 +75,16 @@ public class eProtocolTypeLayer
          */
 
         private byte[] message;
-        private Types type;
         private byte[] payload;
-
-        private final byte[] pType;
-        private final ByteArrayOutputStream pData;
+        private final byte[] type;
+        private Types parsedType;
 
         private Receiver()
         {
             this.message = null;
-            this.type = null;
             this.payload = null;
-
-            this.pType = new byte[4];
-            this.pData = new ByteArrayOutputStream();
+            this.type = new byte[4];
+            this.parsedType = null;
         }
 
         // Return TRUE if message correct.
@@ -97,20 +92,20 @@ public class eProtocolTypeLayer
         {
             reset();
             this.message = message;
+            this.payload = new byte[message.length - type.length];
             return parse();
         }
 
         public void reset()
         {
-            pData.reset();
             this.message = null;
-            this.type = null;
+            this.parsedType = null;
             this.payload = null;
         }
 
         public Types type()
         {
-            return this.type;
+            return this.parsedType;
         }
 
         public byte[] payload()
@@ -120,36 +115,32 @@ public class eProtocolTypeLayer
 
         private boolean parse()
         {
-            if (message == null || message.length < pType.length)
+            if (message == null || message.length < type.length)
                 return false;
 
-            int pTypePtr = 0, bufPtr = -1;
-            while (++bufPtr < message.length)
+            for (int ptr = -1; ++ptr < message.length;)
             {
-                if (pTypePtr < pType.length)
-                    pType[pTypePtr++] = message[bufPtr];
+                if (ptr < type.length)
+                    type[ptr] = message[ptr];
                 else
-                    pData.write(message[bufPtr]);
+                    payload[ptr - type.length] = message[ptr];
             }
 
-            this.type = null;
-            int typeInt = ByteBuffer.wrap(pType).getInt();
+            this.parsedType = null;
+            int typeInt = ByteBuffer.wrap(type).getInt();
             for (Types t : Types.values())
                 if (t.getIndex() == typeInt)
                 {
-                    this.type = t;
+                    this.parsedType = t;
                     break;
                 }
 
-            if (type == null)
+            if (parsedType == null)
             {
-                Log.w(TAG, "Got message of unknown type (type.index=" + typeInt + ")");
+                Log.w(TAG, "Got message of unknown parsedType (parsedType.index=" + typeInt + ")");
                 reset();
                 return false;
             }
-
-            if (pData.size() > 0)
-                this.payload = pData.toByteArray();
 
             return true;
         }

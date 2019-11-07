@@ -1,4 +1,4 @@
-package ru.er_log.bluetooth.component;
+package ru.er_log.bluetooth.util;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -17,7 +17,7 @@ import ru.er_log.bluetooth.MainActivity;
 
 import static ru.er_log.bluetooth.MainActivity.TAG;
 
-public class Utils
+public class Util
 {
     public static void enableBluetooth(Activity activity, BluetoothAdapter bluetoothAdapter, int requestCode)
     {

@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import ru.er_log.bluetooth.component.FileUtil;
-import ru.er_log.bluetooth.component.ScreenshotUtil;
-import ru.er_log.bluetooth.component.Utils;
+import ru.er_log.bluetooth.util.FileUtil;
+import ru.er_log.bluetooth.util.ScreenshotUtil;
+import ru.er_log.bluetooth.util.Util;
 import ru.er_log.bluetooth.component.eBluetoothDevice;
 import ru.er_log.bluetooth.component.eProtocolTypeLayer;
 
@@ -189,12 +189,12 @@ public class ClientActivity extends AppCompatActivity
 
     private void enableBluetooth(int requestCode)
     {
-        Utils.enableBluetooth(this, bluetoothAdapter, requestCode);
+        Util.enableBluetooth(this, bluetoothAdapter, requestCode);
     }
 
     private void enableDiscoverability(int requestCode)
     {
-        Utils.enableDiscoverability(this, bluetoothAdapter, DISCOVER_DURATION, requestCode);
+        Util.enableDiscoverability(this, bluetoothAdapter, DISCOVER_DURATION, requestCode);
     }
 
     // Fill the list by paired devices.
@@ -430,10 +430,10 @@ public class ClientActivity extends AppCompatActivity
             }
         } else if (type == eProtocolTypeLayer.Types.SCREENSHOT_RESPONSE)
         {
-            if (!Utils.isExternalStorageWritable())
+            if (!Util.isExternalStorageWritable())
                 Log.e(TAG, "Type SCREENSHOT_RESPONSE: External storage is not mounted for saving image!");
 
-            File screenshot = ScreenshotUtil.saveScreenshot(Utils.getPrivateScreenshotsDir(this), payload);
+            File screenshot = ScreenshotUtil.saveScreenshot(Util.getPrivateScreenshotsDir(this), payload);
             if (screenshot == null)
             {
                 Toast.makeText(ClientActivity.super.getApplicationContext(), "Screenshot saving failed", Toast.LENGTH_SHORT).show();

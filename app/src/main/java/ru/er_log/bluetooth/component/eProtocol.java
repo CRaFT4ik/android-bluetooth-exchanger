@@ -1,9 +1,14 @@
 package ru.er_log.bluetooth.component;
 
+import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static ru.er_log.bluetooth.MainActivity.TAG;
 
 public class eProtocol
 {
@@ -16,13 +21,13 @@ public class eProtocol
 
     private final Transmitter transmitter;
     private final Receiver receiver;
-    private final List<byte[]> messagesList;
+    private final List<byte[]> newMessagesList;
 
     public eProtocol()
     {
         this.transmitter = new Transmitter();
         this.receiver = new Receiver();
-        this.messagesList = new ArrayList<>();
+        this.newMessagesList = new ArrayList<>();
     }
 
     public Transmitter getTransmitter()
@@ -35,17 +40,13 @@ public class eProtocol
         return receiver;
     }
 
-    public List<byte[]> getReceivedMessagesList()
+    /* Note: messages list will be cleared after a call. */
+    public List<byte[]> getRecentlyFormedMessagesList()
     {
-        return messagesList;
-    }
+        List<byte[]> copiedList = new ArrayList<>(newMessagesList);
+        newMessagesList.clear();
 
-    public byte[] getLastReceivedMessage()
-    {
-        if (messagesList.size() > 0)
-            return messagesList.get(messagesList.size() - 1);
-        else
-            return null;
+        return copiedList;
     }
 
     public final class Transmitter
@@ -85,7 +86,7 @@ public class eProtocol
 
         private void shiftMessage()
         {
-            messagesList.add(pData.toByteArray());
+            newMessagesList.add(pData.toByteArray());
             reset();
         }
 

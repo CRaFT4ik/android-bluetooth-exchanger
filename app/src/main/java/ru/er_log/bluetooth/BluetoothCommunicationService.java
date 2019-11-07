@@ -130,9 +130,9 @@ public class BluetoothCommunicationService
                     Log.d(TAG, "Received " + numBytes + " bytes, formed " + formedMessages + " messages");
 
                     // Send the obtained bytes to the UI activity.
-                    while (formedMessages-- > 0)
+                    for (byte[] bytes : protocol.getRecentlyFormedMessagesList())
                     {
-                        Message readMsg = handler.obtainMessage(MessageConstants.MESSAGE_READ, -1, -1, protocol.getLastReceivedMessage());
+                        Message readMsg = handler.obtainMessage(MessageConstants.MESSAGE_READ, -1, -1, bytes);
                         readMsg.sendToTarget();
                     }
                 } catch (IOException e)
